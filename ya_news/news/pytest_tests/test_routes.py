@@ -21,24 +21,25 @@ NOT_AUTHOR_CLIENT = pytest.lazy_fixture('not_author_client')
 
 
 @pytest.mark.parametrize(
-    'url, client_fixture, expected_status',
+    'url, client_fixture, expected_status, method',
     (
-        (HOME_URL, CLIENT, HTTPStatus.OK),
-        (DETAIL_URL, CLIENT, HTTPStatus.OK),
-        (LOGIN_URL, CLIENT, HTTPStatus.OK),
-        (SIGNUP_URL, CLIENT, HTTPStatus.OK),
-        (LOGOUT_URL, CLIENT, HTTPStatus.OK),
+        (HOME_URL, CLIENT, HTTPStatus.OK, 'get'),
+        (DETAIL_URL, CLIENT, HTTPStatus.OK, 'get'),
+        (LOGIN_URL, CLIENT, HTTPStatus.OK, 'get'),
+        (SIGNUP_URL, CLIENT, HTTPStatus.OK, 'get'),
+        (LOGOUT_URL, CLIENT, HTTPStatus.OK, 'post'),
+        (EDIT_URL, CLIENT, HTTPStatus.FOUND, 'get'),
+        (DELETE_URL, CLIENT, HTTPStatus.FOUND, 'get'),
 
-        (EDIT_URL, AUTHOR_CLIENT, HTTPStatus.OK),
-        (EDIT_URL, NOT_AUTHOR_CLIENT, HTTPStatus.NOT_FOUND),
-        (DELETE_URL, AUTHOR_CLIENT, HTTPStatus.OK),
-        (DELETE_URL, NOT_AUTHOR_CLIENT, HTTPStatus.NOT_FOUND),
+        (EDIT_URL, AUTHOR_CLIENT, HTTPStatus.OK, 'get'),
+        (EDIT_URL, NOT_AUTHOR_CLIENT, HTTPStatus.NOT_FOUND, 'get'),
+        (DELETE_URL, AUTHOR_CLIENT, HTTPStatus.OK, 'get'),
+        (DELETE_URL, NOT_AUTHOR_CLIENT, HTTPStatus.NOT_FOUND, 'get'),
     ),
 )
-def test_pages_availability(url, client_fixture, expected_status):
-    response = (client_fixture.post(url)
-                if 'logout' in url
-                else client_fixture.get(url))
+def test_pages_availability(url, client_fixture, expected_status, method):
+    request_method = getattr(client_fixture, method)
+    response = request_method(url)
     assert response.status_code == expected_status
 
 
@@ -50,5 +51,4 @@ def test_pages_availability(url, client_fixture, expected_status):
     ),
 )
 def test_redirects_for_anonymous(client, url, expected_redirect):
-    response = client.get(url)
-    assertRedirects(response, expected_redirect)
+    assertRedirects(client.get(url), expected_redirect)

@@ -7,8 +7,8 @@ pytestmark = pytest.mark.django_db
 
 
 def test_news_count(client, multiple_news, home_url):
-    response = client.get(home_url)
-    assert response.context['news_feed'].count() == NEWS_COUNT_ON_HOME_PAGE
+    assert (client.get(home_url).context['news_feed'].count()
+            == NEWS_COUNT_ON_HOME_PAGE)
 
 
 def test_news_order(client, multiple_news, home_url):
@@ -32,5 +32,5 @@ def test_anonymous_client_has_no_form(client, detail_url):
 
 
 def test_authorized_client_has_form(author_client, detail_url):
-    response = author_client.get(detail_url)
-    assert isinstance(response.context.get('form'), CommentForm)
+    assert isinstance(author_client.get(detail_url).context.get('form'),
+                      CommentForm)
