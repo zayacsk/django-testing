@@ -1,25 +1,24 @@
 from .base import BaseNoteTest
-from . import urls
 
 
 class TestRoutes(BaseNoteTest):
 
     def test_pages_status_codes(self):
         cases = (
-            (urls.HOME_URL, self.client, self.OK),
-            (urls.LOGIN_URL, self.client, self.OK),
-            (urls.SIGNUP_URL, self.client, self.OK),
+            (self.HOME_URL, self.client, self.OK),
+            (self.LOGIN_URL, self.client, self.OK),
+            (self.SIGNUP_URL, self.client, self.OK),
 
-            (urls.LIST_URL, self.author_client, self.OK),
-            (urls.ADD_URL, self.author_client, self.OK),
-            (urls.SUCCESS_URL, self.author_client, self.OK),
-            (urls.DETAIL_URL, self.author_client, self.OK),
-            (urls.EDIT_URL, self.author_client, self.OK),
-            (urls.DELETE_URL, self.author_client, self.OK),
+            (self.LIST_URL, self.author_client, self.OK),
+            (self.ADD_URL, self.author_client, self.OK),
+            (self.SUCCESS_URL, self.author_client, self.OK),
+            (self.DETAIL_URL, self.author_client, self.OK),
+            (self.EDIT_URL, self.author_client, self.OK),
+            (self.DELETE_URL, self.author_client, self.OK),
 
-            (urls.DETAIL_URL, self.reader_client, self.NOT_FOUND),
-            (urls.EDIT_URL, self.reader_client, self.NOT_FOUND),
-            (urls.DELETE_URL, self.reader_client, self.NOT_FOUND),
+            (self.DETAIL_URL, self.reader_client, self.NOT_FOUND),
+            (self.EDIT_URL, self.reader_client, self.NOT_FOUND),
+            (self.DELETE_URL, self.reader_client, self.NOT_FOUND),
         )
 
         for url, client, status in cases:
