@@ -1,36 +1,31 @@
 import pytest
 
 from news.forms import CommentForm
+from yanews.settings import NEWS_COUNT_ON_HOME_PAGE
+
+pytestmark = pytest.mark.django_db
 
 
-@pytest.mark.django_db
 def test_news_count(client, multiple_news, home_url):
     response = client.get(home_url)
-    object_list = response.context['news_feed']
-    news_count = object_list.count()
-    assert news_count == 10
+    assert response.context['news_feed'].count() == NEWS_COUNT_ON_HOME_PAGE
 
 
-@pytest.mark.django_db
 def test_news_order(client, multiple_news, home_url):
     response = client.get(home_url)
-    object_list = response.context['news_feed']
-    all_dates = [news.date for news in object_list]
-    sorted_dates = sorted(all_dates, reverse=True)
-    assert all_dates == sorted_dates
+    news_dates = [news.date for news in response.context['news_feed']]
+    assert news_dates == sorted(news_dates, reverse=True)
 
 
-@pytest.mark.django_db
-def test_comments_order(client, news, multiple_comment, detail_url):
+def test_comments_order(client, multiple_comment, detail_url):
     response = client.get(detail_url)
-    assert 'news' in response.context
-    news = response.context['news']
-    all_comments = news.comment_set.all()
-    all_timestamps = [comment.created for comment in all_comments]
-    assert all_timestamps == sorted(all_timestamps)
+    timestamps = [
+        comment.created
+        for comment in response.context['news'].comment_set.all()
+    ]
+    assert timestamps == sorted(timestamps)
 
 
-@pytest.mark.django_db
 def test_anonymous_client_has_no_form(client, detail_url):
     response = client.get(detail_url)
     assert 'form' not in response.context
@@ -38,5 +33,4 @@ def test_anonymous_client_has_no_form(client, detail_url):
 
 def test_authorized_client_has_form(author_client, detail_url):
     response = author_client.get(detail_url)
-    assert 'form' in response.context
-    assert isinstance(response.context['form'], CommentForm)
+    assert isinstance(response.context.get('form'), CommentForm)

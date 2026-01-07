@@ -1,15 +1,11 @@
-import pytest
 from datetime import timedelta
 
+import pytest
 from django.test.client import Client
 from django.urls import reverse
 from django.utils import timezone
 
 from news.models import Comment, News
-
-
-COMMENT_TEXT = 'Comment text'
-NEW_COMMENT_TEXT = 'New comment text'
 
 
 @pytest.fixture
@@ -46,19 +42,10 @@ def news():
 
 @pytest.fixture
 def multiple_news():
-    all_news = [
-        News(
-            title='Title',
-            text='Text.',
-        )
+    News.objects.bulk_create(
+        News(title='Title', text='Text.')
         for _ in range(11)
-    ]
-    News.objects.bulk_create(all_news)
-
-
-@pytest.fixture
-def news_id_for_args(news):
-    return (news.id,)
+    )
 
 
 @pytest.fixture
@@ -66,7 +53,7 @@ def comment(news, author):
     return Comment.objects.create(
         news=news,
         author=author,
-        text=COMMENT_TEXT,
+        text='Comment text',
     )
 
 
@@ -83,11 +70,6 @@ def multiple_comment(news, author):
 
 
 @pytest.fixture
-def comment_id_for_args(comment):
-    return (comment.id,)
-
-
-@pytest.fixture
 def home_url():
     return reverse('news:home')
 
@@ -98,10 +80,40 @@ def detail_url(news):
 
 
 @pytest.fixture
+def edit_url(comment):
+    return reverse('news:edit', args=(comment.id,))
+
+
+@pytest.fixture
 def delete_url(comment):
     return reverse('news:delete', args=(comment.id,))
 
 
 @pytest.fixture
-def edit_url(comment):
-    return reverse('news:edit', args=(comment.id,))
+def login_url():
+    return reverse('users:login')
+
+
+@pytest.fixture
+def logout_url():
+    return reverse('users:logout')
+
+
+@pytest.fixture
+def signup_url():
+    return reverse('users:signup')
+
+
+@pytest.fixture
+def redirect_to_login_edit(login_url, edit_url):
+    return f'{login_url}?next={edit_url}'
+
+
+@pytest.fixture
+def redirect_to_login_delete(login_url, delete_url):
+    return f'{login_url}?next={delete_url}'
+
+
+@pytest.fixture
+def detail_with_comments_url(detail_url):
+    return f'{detail_url}#comments'
