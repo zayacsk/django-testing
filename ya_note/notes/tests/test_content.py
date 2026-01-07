@@ -9,10 +9,6 @@ class TestContent(BaseNoteTest):
         response = self.author_client.get(self.LIST_URL)
         notes = response.context['notes_feed']
         self.assertIn(self.note, notes)
-        self.assertEqual(self.note.title, self.note.title)
-        self.assertEqual(self.note.text, self.note.text)
-        self.assertEqual(self.note.slug, self.note.slug)
-        self.assertEqual(self.note.author, self.note.author)
 
     def test_note_not_in_list_for_reader(self):
         self.assertNotIn(

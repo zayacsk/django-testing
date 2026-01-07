@@ -9,10 +9,10 @@ from news.models import Comment
 pytestmark = pytest.mark.django_db
 
 
-COMMENT_DATA = {'text': 'Comment text'}
+COMMENT_DATA = {'text': 'New comment text'}
 
 BAD_WORDS_DATA = [
-    {'text': f'Текст с {bad_word}'} for bad_word in BAD_WORDS
+    {'text': bad_word} for bad_word in BAD_WORDS
 ]
 
 

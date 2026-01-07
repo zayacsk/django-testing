@@ -54,12 +54,3 @@ class BaseNoteTest(TestCase):
         cls.REDIRECT_ADD = f'{cls.LOGIN_URL}?next={cls.ADD_URL}'
         cls.REDIRECT_SUCCESS = f'{cls.LOGIN_URL}?next={cls.SUCCESS_URL}'
         cls.REDIRECT_LIST = f'{cls.LOGIN_URL}?next={cls.LIST_URL}'
-
-        cls.redirect_cases = (
-            (cls.DETAIL_URL, cls.REDIRECT_DETAIL),
-            (cls.EDIT_URL, cls.REDIRECT_EDIT),
-            (cls.DELETE_URL, cls.REDIRECT_DELETE),
-            (cls.ADD_URL, cls.REDIRECT_ADD),
-            (cls.SUCCESS_URL, cls.REDIRECT_SUCCESS),
-            (cls.LIST_URL, cls.REDIRECT_LIST),
-        )
