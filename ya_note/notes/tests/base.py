@@ -16,6 +16,25 @@ class BaseNoteTest(TestCase):
     NOT_FOUND = HTTPStatus.NOT_FOUND
     REDIRECT = HTTPStatus.FOUND
 
+    HOME_URL = reverse('notes:home')
+    LOGIN_URL = reverse('users:login')
+    LOGOUT_URL = reverse('users:logout')
+    SIGNUP_URL = reverse('users:signup')
+    LIST_URL = reverse('notes:list')
+    ADD_URL = reverse('notes:add')
+    SUCCESS_URL = reverse('notes:success')
+
+    DETAIL_URL = reverse('notes:detail', args=(NOTE_SLUG,))
+    EDIT_URL = reverse('notes:edit', args=(NOTE_SLUG,))
+    DELETE_URL = reverse('notes:delete', args=(NOTE_SLUG,))
+
+    REDIRECT_DETAIL = f'{LOGIN_URL}?next={DETAIL_URL}'
+    REDIRECT_EDIT = f'{LOGIN_URL}?next={EDIT_URL}'
+    REDIRECT_DELETE = f'{LOGIN_URL}?next={DELETE_URL}'
+    REDIRECT_ADD = f'{LOGIN_URL}?next={ADD_URL}'
+    REDIRECT_SUCCESS = f'{LOGIN_URL}?next={SUCCESS_URL}'
+    REDIRECT_LIST = f'{LOGIN_URL}?next={LIST_URL}'
+
     @classmethod
     def setUpTestData(cls):
         cls.author = User.objects.create(username='Author')
@@ -35,22 +54,3 @@ class BaseNoteTest(TestCase):
             'text': 'New text',
             'slug': 'new-slug',
         }
-
-        cls.HOME_URL = reverse('notes:home')
-        cls.LOGIN_URL = reverse('users:login')
-        cls.LOGOUT_URL = reverse('users:logout')
-        cls.SIGNUP_URL = reverse('users:signup')
-        cls.LIST_URL = reverse('notes:list')
-        cls.ADD_URL = reverse('notes:add')
-        cls.SUCCESS_URL = reverse('notes:success')
-
-        cls.DETAIL_URL = reverse('notes:detail', args=(cls.NOTE_SLUG,))
-        cls.EDIT_URL = reverse('notes:edit', args=(cls.NOTE_SLUG,))
-        cls.DELETE_URL = reverse('notes:delete', args=(cls.NOTE_SLUG,))
-
-        cls.REDIRECT_DETAIL = f'{cls.LOGIN_URL}?next={cls.DETAIL_URL}'
-        cls.REDIRECT_EDIT = f'{cls.LOGIN_URL}?next={cls.EDIT_URL}'
-        cls.REDIRECT_DELETE = f'{cls.LOGIN_URL}?next={cls.DELETE_URL}'
-        cls.REDIRECT_ADD = f'{cls.LOGIN_URL}?next={cls.ADD_URL}'
-        cls.REDIRECT_SUCCESS = f'{cls.LOGIN_URL}?next={cls.SUCCESS_URL}'
-        cls.REDIRECT_LIST = f'{cls.LOGIN_URL}?next={cls.LIST_URL}'

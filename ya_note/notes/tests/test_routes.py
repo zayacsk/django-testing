@@ -33,12 +33,12 @@ class TestRoutes(BaseNoteTest):
 
     def test_redirects_for_anonymous_user(self):
         redirect_cases = (
-            (self.DETAIL_URL, f'{self.LOGIN_URL}?next={self.DETAIL_URL}'),
-            (self.EDIT_URL, f'{self.LOGIN_URL}?next={self.EDIT_URL}'),
-            (self.DELETE_URL, f'{self.LOGIN_URL}?next={self.DELETE_URL}'),
-            (self.ADD_URL, f'{self.LOGIN_URL}?next={self.ADD_URL}'),
-            (self.SUCCESS_URL, f'{self.LOGIN_URL}?next={self.SUCCESS_URL}'),
-            (self.LIST_URL, f'{self.LOGIN_URL}?next={self.LIST_URL}'),
+            (self.DETAIL_URL, self.REDIRECT_DETAIL),
+            (self.EDIT_URL, self.REDIRECT_EDIT),
+            (self.DELETE_URL, self.REDIRECT_DELETE),
+            (self.ADD_URL, self.REDIRECT_ADD),
+            (self.SUCCESS_URL, self.REDIRECT_SUCCESS),
+            (self.LIST_URL, self.REDIRECT_LIST),
         )
         for url, expected_url in redirect_cases:
             with self.subTest(url=url):

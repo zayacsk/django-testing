@@ -43,15 +43,14 @@ def news():
 
 @pytest.fixture
 def multiple_news(db):
-    news_list = []
-    for index in range(NEWS_COUNT_ON_HOME_PAGE + 1):
-        news_list.append(
-            News(
-                title='Title',
-                text='Text',
-                date=timezone.now() + timedelta(days=index)
-            )
+    news_list = [
+        News(
+            title='Title',
+            text='Text',
+            date=timezone.now() + timedelta(days=index)
         )
+        for index in range(NEWS_COUNT_ON_HOME_PAGE + 1)
+    ]
     News.objects.bulk_create(news_list)
 
 

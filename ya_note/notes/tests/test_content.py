@@ -8,7 +8,13 @@ class TestContent(BaseNoteTest):
     def test_note_in_list_for_author(self):
         response = self.author_client.get(self.LIST_URL)
         notes = response.context['notes_feed']
-        self.assertIn(self.note, notes)
+        note_from_page = next(
+            note for note in notes if note.id == self.note.id
+        )
+        self.assertEqual(note_from_page.title, self.note.title)
+        self.assertEqual(note_from_page.text, self.note.text)
+        self.assertEqual(note_from_page.slug, self.note.slug)
+        self.assertEqual(note_from_page.author, self.note.author)
 
     def test_note_not_in_list_for_reader(self):
         self.assertNotIn(
