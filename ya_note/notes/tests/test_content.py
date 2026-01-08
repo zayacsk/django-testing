@@ -8,9 +8,7 @@ class TestContent(BaseNoteTest):
     def test_note_in_list_for_author(self):
         response = self.author_client.get(self.LIST_URL)
         notes = response.context['notes_feed']
-        note_from_page = next(
-            note for note in notes if note.id == self.note.id
-        )
+        note_from_page = notes.get(id=self.note.id)
         self.assertEqual(note_from_page.title, self.note.title)
         self.assertEqual(note_from_page.text, self.note.text)
         self.assertEqual(note_from_page.slug, self.note.slug)
