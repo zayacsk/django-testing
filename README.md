@@ -6,7 +6,7 @@
 
 ## Технологии
 
-- Python
+- Python 3.10
 - Django 5.1.1
 - pytest
 - pytest-django
