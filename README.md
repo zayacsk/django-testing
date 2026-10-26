@@ -1,52 +1,93 @@
-# Django testing  
-## Если вы успели выполнить все домашние задания — ваш финальный проект готов.
-Перенесите тесты из ваших проектов в данный репозиторий (**django-testing**), который появился в вашем аккаунте.  
-В итоге должна получиться следующая структура репозитория:
-```
-Dev
- └── django-testing
-     ├── ya_news
-     │   ├── news
-     │   │   ├── fixtures/
-     │   │   ├── migrations/
-     │   │   ├── pytest_tests/   <- Директория с вашими тестами pytest для проекта ya_news
-     │   │   ├── __init__.py
-     │   │   ├── admin.py
-     │   │   ├── apps.py
-     │   │   ├── forms.py
-     │   │   ├── models.py
-     │   │   ├── urls.py
-     │   │   └── views.py
-     │   ├── templates/
-     │   ├── yanews/
-     │   ├── manage.py
-     │   └── pytest.ini
-     ├── ya_note
-     │   ├── notes
-     │   │   ├── migrations/
-     │   │   ├── tests/          <- Директория с вашими тестами unittest для проекта ya_note
-     │   │   ├── __init__.py
-     │   │   ├── admin.py
-     │   │   ├── apps.py
-     │   │   ├── forms.py
-     │   │   ├── models.py
-     │   │   ├── urls.py
-     │   │   └── views.py
-     │   ├── templates/
-     │   ├── yanote/
-     │   ├── manage.py
-     │   └── pytest.ini
-     ├── .gitignore
-     ├── README.md
-     ├── requirements.txt
-     └── structure_test.py
+# Django Testing
+
+Учебный проект по тестированию веб-приложений на Django в рамках курса Яндекс Практикума.
+
+В репозитории собраны два проекта — **YaNews** и **YaNote**. Для проверки их функциональности используются автоматические тесты.
+
+## Технологии
+
+- Python
+- Django 5.1.1
+- pytest
+- pytest-django
+- unittest
+- flake8
+
+## Проекты
+
+### YaNews
+
+Приложение для публикации и обсуждения новостей.
+
+Тесты находятся в директории `ya_news/news/pytest_tests/`.
+
+### YaNote
+
+Приложение для создания и управления личными заметками.
+
+Тесты находятся в директории `ya_note/notes/tests/`.
+
+## Запуск проекта
+
+### 1. Клонирование репозитория
+
+```bash
+git clone https://github.com/zayacsk/django-testing.git
+cd django-testing
 ```
 
-## После копирования тестов, написанных в ходе прохождения спринта, для проверки готовности проекта к сдаче необходимо выполнить 4 действия:
-1. Создать и активировать виртуальное окружение; установить зависимости из файла `requirements.txt`;
-2. Запустить скрипт для `run_tests.sh` из корневой директории проекта:
-```sh
+### 2. Создание виртуального окружения
+
+Linux / macOS:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+Windows:
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+### 3. Установка зависимостей
+
+```bash
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+### 4. Запуск проверок
+
+Из корневой директории проекта выполните:
+
+```bash
 bash run_tests.sh
 ```
 
-**Если все проверки успешно выполнились, проект можно отправлять на ревью.**
+Скрипт последовательно проверяет стиль кода с помощью `flake8`, структуру проекта и тесты обоих приложений.
+
+## Структура проекта
+
+```text
+django-testing/
+├── ya_news/
+│   └── news/
+│       └── pytest_tests/  # Тесты YaNews
+├── ya_note/
+│   └── notes/
+│       └── tests/         # Тесты YaNote
+├── requirements.txt
+├── run_tests.sh
+├── setup.cfg
+├── structure_test.py
+└── README.md
+```
+
+## Автор
+
+**Денис Анохин**
+
+GitHub: [@zayacsk](https://github.com/zayacsk)
